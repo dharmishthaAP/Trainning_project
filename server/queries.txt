@@ -9,4 +9,6 @@ API = {
     POST http://localhost:5000/project
     DELETE http://localhost:5000/project/id
     PATCH http://localhost:5000/project/id
+    POST http://localhost:5000/manager
+    PATCH http://localhost:5000/manager
 }
