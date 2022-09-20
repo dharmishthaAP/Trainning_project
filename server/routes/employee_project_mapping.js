@@ -1,7 +1,6 @@
 const express = require('express');
-const { Client } = require('pg');
 const router = express.Router();
-const pool = require("./database");
+const pool = require("../../server/database");
 
 
 

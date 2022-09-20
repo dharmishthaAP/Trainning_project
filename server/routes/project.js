@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const pool = require("./database");
+const pool = require("../../server/database");
 
 router.get('/', (req, res, next) => {
     pool.query('select * from project', (err, result) => {
@@ -84,33 +84,7 @@ router.delete('/:id', (req, res, next) => {
 })
 
 
-router.patch('/manager/:id', (req, res, next) => {
-    const project_id = parseInt(req.params.id);
-    const {emp_id} = req.body;
-    pool.query('SELECT employee_project_details.project_id FROM employee_project_details WHERE employee_project_details.project_id = $1 AND employee_project_details.is_manager = TRUE',[project_id],  (err, result) => {
-        if(err) {
-            next(err);
-        } else{
-            if(result.rowCount > 0) {
-                var error = new Error('project_id already has a manager')
-                error.status = 409
-                next(error);
-            } else{
-                pool.query('UPDATE employee_project_details SET is_manager = TRUE WHERE emp_id = $1', [emp_id], (err, result) => {
-                    if(err){
-                        console.log("hello");
-                        next(err)
-                    }
-                    else{
-                        res.status(200).json( {
-                            message : "Updated"
-                        } )
-                    }
-                })
-            }
-        }
-    })
-})
+
 
 
 

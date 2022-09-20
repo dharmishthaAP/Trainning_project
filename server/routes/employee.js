@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const pool = require("./database");
+const pool = require("../../server/database");
 // const query = require("./query");
 
 
@@ -87,33 +87,7 @@ router.delete('/:id', (req, res, next) => {
         })
 })
 
-router.post('/project_manager', (req,res,next) => {
-    const {emp_id, project_id, is_manager} = req.body;
-    pool.query('SELECT employee_project_details.project_id FROM employee_project_details WHERE employee_project_details.is_manager = TRUE AND project_id = $1',[project_id], (err,result) => {
-        if(err) {
-            next(err);
-        } else {
-            if(result.rowCount > 0) {
-                var error = new Error('project already has a manager')
-                error.status = 409
-                next(error);
-            }
-            else{
-                pool.query('INSERT INTO employee_project_details (emp_id, project_id, is_manager) VALUES($1, $2, $3)', [emp_id, project_id, is_manager], (err, result) => {
-                        if(err) {
-                            next(err);
-                        }
-                        else{
-                            res.status(200).json( {
-                                message : result.command
-                            })
-                        }
-                    })
-            }
-        }
-    })
 
-})
 
 
 

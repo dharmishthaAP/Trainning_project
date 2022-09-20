@@ -1,7 +1,7 @@
 const express = require('express');
-const employee_routes = require('./employee');
-const project_routes = require('./project');
-const manager_routes = require('./employee_project_mapping');
+const employee_routes = require('./routes/employee');
+const project_routes = require('./routes/project');
+const manager_routes = require('./routes/employee_project_mapping');
 const app = express();
 app.use(express.json());
 
@@ -12,11 +12,7 @@ app.get("/", (req, res) => {
 app.use('/employee', employee_routes);
 app.use('/project',project_routes);
 app.use('/manager', manager_routes);
-// app.use((req, res, next) => {
-//     const err = new Error ("Not Found")
-//     err.status = 404
-//     next(err)
-// })
+
 
 app.use((err, req, res, next) => {
     // console.log("hello");
